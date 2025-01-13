@@ -10,9 +10,9 @@ def load_model(model_path):
         return pickle.load(file)
 
 # Load models
-Kidney_model = load_model(r"C:\Users\Raju\OneDrive\Desktop\PROJECTS\Multi-Disease-Prediction\Kidney_Disease.pkl")
-liver_model = load_model(r'C:\Users\Raju\OneDrive\Desktop\PROJECTS\Multi-Disease-Prediction\Liver_Disease.pkl')
-parkinson_model = load_model(r'C:\Users\Raju\OneDrive\Desktop\PROJECTS\Multi-Disease-Prediction\Parkinsons_Disease.pkl')
+Kidney_model = load_model(r'Kidney_Disease.pkl')
+liver_model = load_model(r'Liver_Disease.pkl')
+parkinson_model = load_model(r'Parkinsons_Disease.pkl')
 
 # Sidebar created  
 with st.sidebar:
