@@ -7,7 +7,7 @@ from streamlit_option_menu import option_menu
 # Function to load models
 def load_model(model_path):
     with open(model_path, 'rb') as file:
-        return pickle.load(file)
+        return pickle.load_model(file)
 
 # Load models
 Kidney_model = load_model(r'Kidney_Disease.pkl')
