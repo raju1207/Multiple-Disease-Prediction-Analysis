@@ -7,12 +7,12 @@ from streamlit_option_menu import option_menu
 # Function to load models
 def load_model(model_path):
     with open(model_path, 'rb') as file:
-        return pickle.load_model(file)
+        return pickle.load(file)
 
 # Load models
-Kidney_model = load_model(r'Kidney_Disease.pkl')
-liver_model = load_model(r'Liver_Disease.pkl')
-parkinson_model = load_model(r'Parkinsons_Disease.pkl')
+Kidney_model = load_model(r"C:\Users\Raju\OneDrive\Desktop\PROJECTS\Multi-Disease-Prediction\Data\Kidney_Disease.pkl")
+liver_model = load_model(r'C:\Users\Raju\OneDrive\Desktop\PROJECTS\Multi-Disease-Prediction\Data\Liver_Disease.pkl')
+parkinson_model = load_model(r'C:\Users\Raju\OneDrive\Desktop\PROJECTS\Multi-Disease-Prediction\Data\Parkinsons_Disease.pkl')
 
 # Sidebar created  
 with st.sidebar:
@@ -21,6 +21,9 @@ with st.sidebar:
                             "Liver Prediction",
                             "Parkinsons Prediction"], 
         icons=['activity', 'heart', 'person'], menu_icon="hospital-fill", default_index=1)
+
+# Add image
+st.image("C:/Users/Raju/OneDrive/Desktop/PROJECTS/Multi-Disease-Prediction/Data/Scripts/Image.jpeg")
 
 # Add a colored sidebar
 st.sidebar.markdown("""
@@ -175,4 +178,3 @@ elif selected_model == 'Parkinsons Prediction':
         prediction = parkinson_model.predict(input_data)
         advice = "Drinking plenty of fluids and exercising and Medications that treat Parkinson's disease can dry you out."
         display_result("Parkinson Disease", prediction[0], advice)
-
