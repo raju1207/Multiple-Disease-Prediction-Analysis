@@ -16,9 +16,19 @@ parkinson_model = load_model("Parkinsons_Disease.pkl")
 
 # Sidebar
 with st.sidebar:
-    selected_model = option_menu("Multiple Disease Prediction System 🩺🏥", 
-        ["Kidney Prediction", "Liver Prediction", "Parkinsons Prediction"], 
-        icons=['activity', 'heart', 'person'], menu_icon="hospital", default_index=1)
+    st.markdown("""
+        <h2 style='font-size: 28px; font-weight: bold; color: #333;'>
+            🩺🏥 Multiple Disease Prediction System
+        </h2>
+    """, unsafe_allow_html=True)
+
+    selected_model = option_menu(
+        menu_title=None,
+        options=["Kidney Prediction", "Liver Prediction", "Parkinsons Prediction"],
+        icons=['activity', 'heart', 'person'],
+        menu_icon="hospital",
+        default_index=1
+    )
 
 # Load image 
 st.image("Image.jpeg") 
