@@ -5,86 +5,50 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 # Function to load models
-def load_model(model_path):
-    with open(model_path, 'rb') as file:
+def load_model(file_name):
+    with open(file_name, 'rb') as file:
         return pickle.load(file)
 
 # Load models
-Kidney_model = load_model(r"C:\Users\Raju\OneDrive\Desktop\PROJECTS\Multi-Disease-Prediction\Data\Kidney_Disease.pkl")
-liver_model = load_model(r'C:\Users\Raju\OneDrive\Desktop\PROJECTS\Multi-Disease-Prediction\Data\Liver_Disease.pkl')
-parkinson_model = load_model(r'C:\Users\Raju\OneDrive\Desktop\PROJECTS\Multi-Disease-Prediction\Data\Parkinsons_Disease.pkl')
+Kidney_model = load_model("Kidney_Disease.pkl")
+liver_model = load_model("Liver_Disease.pkl")
+parkinson_model = load_model("Parkinsons_Disease.pkl")
 
-# Sidebar created  
+# Sidebar
 with st.sidebar:
     selected_model = option_menu("Multiple Disease Prediction System 🩺🏥", 
-                           ["Kidney Prediction", 
-                            "Liver Prediction",
-                            "Parkinsons Prediction"], 
-        icons=['activity', 'heart', 'person'], menu_icon="hospital-fill", default_index=1)
+        ["Kidney Prediction", "Liver Prediction", "Parkinsons Prediction"], 
+        icons=['activity', 'heart', 'person'], menu_icon="hospital", default_index=1)
 
-# Add image
-st.image("C:/Users/Raju/OneDrive/Desktop/PROJECTS/Multi-Disease-Prediction/Data/Scripts/Image.jpeg")
+# Load image 
+st.image("Image.jpeg") 
 
-# Add a colored sidebar
+# Sidebar styling
 st.sidebar.markdown("""
     <style>
     .stSidebar {
-        background-color: #ADD8E6; /* Light blue *
+        background-color: #ADD8E6;
     }
     </style>
-    """,
-    unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
-# Function to display funny results
+# Function to display results
 def display_result(condition_name, prediction, advice):
     if prediction == 1:
         st.error(f"I'm so sorry about that! You have {condition_name}. 😔")
         st.write(f"💡 **Advice**: {advice}")
-
     else:
         st.success(f"Congrats! You don't have {condition_name}. 🤝🎉")
         st.write(f"💡 **Advice**: {advice}")
 
 
 # Liver Disease Prediction
-if selected_model == 'Liver Prediction':
-    st.title("Liver's Disease Prediction")
-    
-    # Input fields
-    Age = st.number_input('Age', min_value=1)
-    Gender_select = st.selectbox('Gender', ['Male', 'Female'])
-    Gender_map = {'Male': 1, 'Female': 0}
-    Gender = Gender_map.get(Gender_select)
-    Total_Bilirubin = st.number_input('Total_Bilirubin', min_value=0.0)
-    Direct_Bilirubin = st.number_input('Direct_Bilirubin', min_value=0.0)
-    Alkaline_Phosphotase = st.number_input('Alkaline_Phosphotase', min_value=0)
-    Alamine_Aminotransferase = st.number_input('Alamine_Aminotransferase', min_value=0)
-    Aspartate_Aminotransferase = st.number_input('Aspartate_Aminotransferase', min_value=0)
-    Total_Protiens = st.number_input('Total_Protiens', min_value=0.0)
-    Albumin = st.number_input('Albumin', min_value=0.0)
-    Albumin_and_Globulin_Ratio = st.number_input('Albumin_and_Globulin_Ratio', min_value=0.0)
-    
-    # Prediction button
-    if st.button('Results'):
-        data = {
-            "Age": Age, "Gender": Gender, "Total_Bilirubin": Total_Bilirubin,
-            "Direct_Bilirubin": Direct_Bilirubin, "Alkaline_Phosphotase": Alkaline_Phosphotase,
-            "Alamine_Aminotransferase": Alamine_Aminotransferase,
-            "Aspartate_Aminotransferase": Aspartate_Aminotransferase, "Total_Protiens": Total_Protiens,
-            "Albumin": Albumin, "Albumin_and_Globulin_Ratio": Albumin_and_Globulin_Ratio
-        }
-        input_data = pd.DataFrame([data])
-        prediction = liver_model.predict(input_data)
-        advice = "Reduce the amount of saturated fats, transfats and hydrogenated fats in your diet.!"
-        display_result("Liver Disease", prediction[0], advice)
-
-# Kidney Disease Prediction
-elif selected_model == 'Kidney Prediction':
+if selected_model == 'Kidney Prediction':
     st.title("Kidney's Disease Prediction")
 
     # Input fields
     age = st.number_input('Age', min_value=1, max_value=120)
-    bp = st.number_input('Blood Pressure (bp)', min_value=0.0)
+    bp = st.number_input('Blood Pressure (bp)', min_value=0, max_value=180)
     sg = st.number_input('Specific Gravity (sg)', min_value=1.000, max_value=1.050, step=0.001, format="%.3f")
     al = st.number_input('Albumin (al)', min_value=0)
     su = st.number_input('Sugar (su)', min_value=0)
@@ -134,6 +98,38 @@ elif selected_model == 'Kidney Prediction':
             display_result("Kidney Disease", prediction[0], advice)
         except Exception as e:
             st.error(f"An error occurred during prediction: {e}")
+
+# Kidney Disease Prediction
+elif selected_model == 'Liver Prediction':
+    st.title("Liver's Disease Prediction")
+    
+    # Input fields
+    Age = st.number_input('Age', min_value=1)
+    Gender_select = st.selectbox('Gender', ['Male', 'Female'])
+    Gender_map = {'Male': 1, 'Female': 0}
+    Gender = Gender_map.get(Gender_select)
+    Total_Bilirubin = st.number_input('Total_Bilirubin', min_value=0.0)
+    Direct_Bilirubin = st.number_input('Direct_Bilirubin', min_value=0.0)
+    Alkaline_Phosphotase = st.number_input('Alkaline_Phosphotase', min_value=0)
+    Alamine_Aminotransferase = st.number_input('Alamine_Aminotransferase', min_value=0)
+    Aspartate_Aminotransferase = st.number_input('Aspartate_Aminotransferase', min_value=0)
+    Total_Protiens = st.number_input('Total_Protiens', min_value=0.0)
+    Albumin = st.number_input('Albumin', min_value=0.0)
+    Albumin_and_Globulin_Ratio = st.number_input('Albumin_and_Globulin_Ratio', min_value=0.0)
+    
+    # Prediction button
+    if st.button('Results'):
+        data = {
+            "Age": Age, "Gender": Gender, "Total_Bilirubin": Total_Bilirubin,
+            "Direct_Bilirubin": Direct_Bilirubin, "Alkaline_Phosphotase": Alkaline_Phosphotase,
+            "Alamine_Aminotransferase": Alamine_Aminotransferase,
+            "Aspartate_Aminotransferase": Aspartate_Aminotransferase, "Total_Protiens": Total_Protiens,
+            "Albumin": Albumin, "Albumin_and_Globulin_Ratio": Albumin_and_Globulin_Ratio
+        }
+        input_data = pd.DataFrame([data])
+        prediction = liver_model.predict(input_data)
+        advice = "Reduce the amount of saturated fats, transfats and hydrogenated fats in your diet.!"
+        display_result("Liver Disease", prediction[0], advice)
 
 # Parkinson Disease Prediction
 elif selected_model == 'Parkinsons Prediction':
