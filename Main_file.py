@@ -31,7 +31,7 @@ with st.sidebar:
     )
 
 # Load image 
-st.image("Image.jpeg") 
+st.image("Image.jpeg")
 
 # Sidebar styling
 st.sidebar.markdown("""
@@ -100,14 +100,16 @@ if selected_model == 'Kidney Prediction':
         bp, sg, al, su, bgr, bu, sc, sod, pot, hemo, pcv, wc, rc
     ]).reshape(1, -1)
 
-    # Prediction button
+   # Prediction button
     if st.button("Results"):
         try:
             prediction = Kidney_model.predict(input_data)
             advice = "Make physical activity part of your routine!🏃🏻‍♂️‍➡️💪🏻🏋🏻‍♂️."
             display_result("Kidney Disease", prediction[0], advice)
+        except ValueError:
+            st.error(f"Please ensure all inputs are numeric and valid.")
         except Exception as e:
-            st.error(f"An error occurred during prediction: {e}")
+            st.error(f"An error occurred during prediction: {e}")        
 
 # Kidney Disease Prediction
 elif selected_model == 'Liver Prediction':
@@ -146,28 +148,29 @@ elif selected_model == 'Parkinsons Prediction':
     st.title("Parkinson's Disease Prediction")
 
     # Input fields
-    MDVP_Fo_Hz = st.number_input('MDVP:Fo(Hz)', min_value=0.0)
-    MDVP_Fhi_Hz = st.number_input('MDVP:Fhi(Hz)', min_value=0.0)
-    MDVP_Flo_Hz = st.number_input('MDVP:Flo(Hz)', min_value=0.0)
-    MDVP_Jitter_percent = st.number_input('MDVP:Jitter(%)', min_value=0.0)
-    MDVP_Jitter_Abs = st.number_input('MDVP:Jitter(Abs)', min_value=0.0)
-    MDVP_RAP = st.number_input('MDVP:RAP', min_value=0.0)
-    MDVP_PPQ = st.number_input('MDVP:PPQ', min_value=0.0)
-    Jitter_DDP = st.number_input('Jitter:DDP', min_value=0.0)
-    MDVP_Shimmer = st.number_input('MDVP:Shimmer', min_value=0.0)
-    MDVP_Shimmer_dB = st.number_input('MDVP:Shimmer(dB)', min_value=0.0)
-    Shimmer_APQ3 = st.number_input('Shimmer:APQ3', min_value=0.0)
-    Shimmer_APQ5 = st.number_input('Shimmer:APQ5', min_value=0.0)
-    MDVP_APQ = st.number_input('MDVP:APQ', min_value=0.0)
-    Shimmer_DDA = st.number_input('Shimmer:DDA', min_value=0.0)
-    NHR = st.number_input('NHR', min_value=0.0)
-    HNR = st.number_input('HNR', min_value=0.0)
-    RPDE = st.number_input('RPDE', min_value=0.0)
-    DFA = st.number_input('DFA', min_value=0.0)
-    spread1 = st.number_input('spread1', min_value=-100.0, max_value=100.0)
-    spread2 = st.number_input('spread2', min_value=0.0)
-    D2 = st.number_input('D2', min_value=0.0)
-    PPE = st.number_input('PPE', min_value=0.0)
+    MDVP_Fo_Hz = st.number_input('MDVP:Fo(Hz)', min_value=0.0, step=0.1, format="%.2f")
+    MDVP_Fhi_Hz = st.number_input('MDVP:Fhi(Hz)', min_value=0.0, step=0.1, format="%.2f")
+    MDVP_Flo_Hz = st.number_input('MDVP:Flo(Hz)', min_value=0.0, step=0.1, format="%.2f")
+    MDVP_Jitter_percent = st.number_input('MDVP:Jitter(%)', min_value=0.0, step=0.01, format="%.4f")
+    MDVP_Jitter_Abs = st.number_input('MDVP:Jitter(Abs)', min_value=0.0, step=0.0001, format="%.5f")
+    MDVP_RAP = st.number_input('MDVP:RAP', min_value=0.0, step=0.0001, format="%.5f")
+    MDVP_PPQ = st.number_input('MDVP:PPQ', min_value=0.0, step=0.0001, format="%.5f")
+    Jitter_DDP = st.number_input('Jitter:DDP', min_value=0.0, step=0.0001, format="%.5f")
+    MDVP_Shimmer = st.number_input('MDVP:Shimmer', min_value=0.0, step=0.0001, format="%.5f")
+    MDVP_Shimmer_dB = st.number_input('MDVP:Shimmer(dB)', min_value=0.0, step=0.01, format="%.3f")
+    Shimmer_APQ3 = st.number_input('Shimmer:APQ3', min_value=0.0, step=0.0001, format="%.5f")
+    Shimmer_APQ5 = st.number_input('Shimmer:APQ5', min_value=0.0, step=0.0001, format="%.5f")
+    MDVP_APQ = st.number_input('MDVP:APQ', min_value=0.0, step=0.0001, format="%.5f")
+    Shimmer_DDA = st.number_input('Shimmer:DDA', min_value=0.0, step=0.0001, format="%.5f")
+    NHR = st.number_input('NHR', min_value=0.0, step=0.0001, format="%.5f")
+    HNR = st.number_input('HNR', min_value=0.0, step=0.1, format="%.2f")
+    RPDE = st.number_input('RPDE', min_value=0.0, max_value=1.0, step=0.01, format="%.3f")
+    DFA = st.number_input('DFA', min_value=0.0, max_value=2.0, step=0.01, format="%.3f")
+    spread1 = st.number_input('spread1', min_value=-100.0, max_value=100.0, step=0.01, format="%.3f")
+    spread2 = st.number_input('spread2', min_value=0.0, step=0.01, format="%.3f")
+    D2 = st.number_input('D2', min_value=0.0, step=0.01, format="%.3f")
+    PPE = st.number_input('PPE', min_value=0.0, step=0.01, format="%.3f")
+
 
     # Prediction button
     if st.button('Results'):
